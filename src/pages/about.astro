@@ -1,7 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import PageHero from "../components/PageHero.astro";
-import { company, values } from "../data/site.js";
+import { company, values, team } from "../data/site.js";
 ---
 <Base title="About" description="Leads Glazing is a glass and aluminium construction partner founded to elevate Nigerian architecture, with offices in Abuja and Bida.">
   <PageHero eyebrow="About us" before="The new standard in" mark="glazing" sub="Leads Glazing was founded with a clear mission: to elevate Nigerian architecture with premium glass and aluminium, installed properly." />
@@ -17,6 +17,24 @@ import { company, values } from "../data/site.js";
           <strong>{company.ceo}</strong>
           <span class="muted">{company.ceoTitle}</span>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section team-sec">
+    <div class="container">
+      <h2 class="h2 reveal">The <span class="mark">team</span></h2>
+      <div class="team">
+        {team.map((t) => (
+          <div class="member reveal">
+            {t.image
+              ? <img src={t.image} alt={t.name} loading="lazy" />
+              : <div class="member-mark"><img src="/images/logo-gold.png" alt="" /></div>}
+            <strong>{t.name}</strong>
+            <span class="muted">{t.role}</span>
+            {t.email && <a class="member-mail" href={`mailto:${t.email}`}>{t.email}</a>}
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -52,6 +70,14 @@ import { company, values } from "../data/site.js";
   .story-copy { display: flex; flex-direction: column; gap: 20px; }
   .ceo { display: flex; flex-direction: column; gap: 2px; border-left: 2px solid var(--gold); padding-left: 16px; margin-top: 8px; }
   .ceo strong { font-size: 20px; }
+  .team { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 300px)); gap: 28px; margin-top: 40px; }
+  .member { display: flex; flex-direction: column; gap: 4px; }
+  .member > img, .member-mark { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 12px; margin-bottom: 12px; }
+  .member-mark { background: var(--jungle); display: grid; place-items: center; border: 1px solid var(--thunder); }
+  .member-mark img { width: 55%; }
+  .member strong { font-size: 19px; letter-spacing: -0.02em; }
+  .member-mail { color: var(--gold); font-size: 14px; margin-top: 4px; }
+  @media (max-width: 560px) { .team { grid-template-columns: 1fr 1fr; gap: 16px; } .member strong { font-size: 16px; } .member-mail { font-size: 12px; word-break: break-all; } }
   .values-wrap { padding-top: clamp(56px, 7vw, 88px); padding-bottom: clamp(56px, 7vw, 88px); }
   .values { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; margin-top: 48px; }
   .value { display: flex; flex-direction: column; gap: 10px; border-top: 1px solid var(--gainsboro); padding-top: 20px; }

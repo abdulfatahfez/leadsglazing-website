@@ -106,6 +106,12 @@ export const projects = [
   { title: "Branded glass door", location: "Office", year: "", image: "/images/office-glass-door.jpg", tag: "Doors" },
 ];
 
+// Team shown on the About page. Add a person here with a photo in public/images/ (4:5 portrait).
+export const team = [
+  { name: "Elihu Abdulwahab", role: "Managing Director / CEO", image: "" },
+  { name: "Arc. Ayomide Zainab Makinde", role: "Project Architect", image: "/images/team-ayomide.jpg", email: "ayomide@leadsglazing.com" },
+];
+
 export const process = [
   { step: "01", title: "Site visit & measurement", text: "We visit, take exact measurements and agree what you need, so the quote is based on your real site." },
   { step: "02", title: "Clear quotation", text: "You get an itemised, branded quote with materials, labour, transport and timeline spelled out." },
