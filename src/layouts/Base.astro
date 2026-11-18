@@ -1,8 +1,34 @@
 ---
 import "../styles/global.css";
 import { company, nav, services } from "../data/site.js";
-const { title, description = company.tagline } = Astro.props;
-const fullTitle = title ? `${title} | Leads Glazing` : "Leads Glazing | Premium Glass & Aluminium, Abuja";
+const { title, description = "Leads Glazing supplies and installs aluminium windows and doors, curtain walls, frameless glass partitions and shower glass in Abuja, Bida and across Nigeria. 9+ years' experience.", image = "/images/curtain-wall-abuja.jpg" } = Astro.props;
+const fullTitle = title ? `${title} | Leads Glazing` : "Leads Glazing | Aluminium Windows, Curtain Walls & Glass in Abuja";
+const site = "https://leadsglazing.com";
+const canonical = new URL(Astro.url.pathname, site).href;
+const ogImage = new URL(image, site).href;
+const ld = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "HomeAndConstructionBusiness",
+      "@id": `${site}/#business`,
+      name: company.name,
+      url: site,
+      logo: `${site}/icon-512.png`,
+      image: `${site}/images/curtain-wall-abuja.jpg`,
+      description: "Supply, fabrication and installation of architectural glass and aluminium systems in Nigeria.",
+      telephone: "+234" + company.phone.slice(1),
+      email: company.email,
+      founder: { "@type": "Person", name: company.ceo, jobTitle: company.ceoTitle },
+      sameAs: [company.instagram],
+      areaServed: ["Abuja", "Federal Capital Territory", "Niger State", "Nigeria"],
+      address: { "@type": "PostalAddress", streetAddress: "Uoo Complex, Jabi", addressLocality: "Abuja", addressRegion: "FCT", addressCountry: "NG" },
+      location: company.offices.map((o) => ({ "@type": "Place", name: `Leads Glazing ${o.city} office`, address: { "@type": "PostalAddress", streetAddress: o.address, addressLocality: o.city, addressCountry: "NG" } })),
+      hasOfferCatalog: { "@type": "OfferCatalog", name: "Glazing services", itemListElement: services.map((s) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: s.title, description: s.short, url: `${site}/services#${s.slug}` } })) },
+    },
+    { "@type": "WebSite", "@id": `${site}/#website`, url: site, name: company.name, publisher: { "@id": `${site}/#business` } },
+  ],
+};
 const wa = `https://wa.me/${company.phoneIntl}?text=${encodeURIComponent("Hello Leads Glazing, I'd like a quote for")}`;
 ---
 <!doctype html>
@@ -12,9 +38,25 @@ const wa = `https://wa.me/${company.phoneIntl}?text=${encodeURIComponent("Hello 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{fullTitle}</title>
   <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Leads Glazing" />
+  <meta property="og:locale" content="en_NG" />
+  <meta property="og:url" content={canonical} />
   <meta property="og:title" content={fullTitle} />
   <meta property="og:description" content={description} />
-  <meta property="og:image" content="/images/curtain-wall-abuja.jpg" />
+  <meta property="og:image" content={ogImage} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+  <meta name="geo.region" content="NG-FC" />
+  <meta name="geo.placename" content="Abuja" />
+  <link rel="sitemap" href="/sitemap.xml" />
+  {company.verification?.google && <meta name="google-site-verification" content={company.verification.google} />}
+  {company.verification?.bing && <meta name="msvalidate.01" content={company.verification.bing} />}
+  <script type="application/ld+json" set:html={JSON.stringify(ld)} />
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

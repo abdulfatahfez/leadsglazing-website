@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import { company, services, projects, process } from "../data/site.js";
+import { company, services, projects, process, faqs } from "../data/site.js";
 const featured = projects.slice(0, 6);
 ---
 <Base>
@@ -64,23 +64,16 @@ const featured = projects.slice(0, 6);
         <h2 class="h2">Smart solutions<br />for every <span class="mark">project</span></h2>
         <a class="view-all" href="/services">View all services ↗</a>
       </div>
-      <div class="svc-list">
+      <div class="mosaic">
         {services.map((s, i) => (
-          <details class="svc reveal">
-            <summary>
-              <span class="num">{String(i + 1).padStart(3, "0")}</span>
-              <span class="svc-title">{s.title}</span>
-              <span class="plus" aria-hidden="true"></span>
-            </summary>
-            <div class="svc-body">
-              <img src={s.image} alt={s.title} loading="lazy" />
-              <div>
-                <p class="lead">{s.body}</p>
-                <ul>{s.points.map((p) => <li>{p}</li>)}</ul>
-                <a class="btn btn-outline" href={`/services#${s.slug}`}>Learn more</a>
-              </div>
+          <a href={`/services#${s.slug}`} class={`tile t${i + 1} reveal`}>
+            <img src={s.image} alt={`${s.title} by Leads Glazing`} loading="lazy" />
+            <div class="cap">
+              <span class="tnum">{String(i + 1).padStart(2, "0")}</span>
+              <strong>{s.title}</strong>
+              <span class="more">{s.short}</span>
             </div>
-          </details>
+          </a>
         ))}
       </div>
     </div>
@@ -125,6 +118,33 @@ const featured = projects.slice(0, 6);
       </div>
     </div>
   </section>
+
+  <!-- FAQ -->
+  <section class="section faq-sec">
+    <div class="container">
+      <div class="sec-head reveal">
+        <h2 class="h2">Questions,<br /><span class="mark">answered</span></h2>
+        <a class="view-all" href="/contact">Ask us something else ↗</a>
+      </div>
+      <div class="svc-list">
+        {faqs.map((f, i) => (
+          <details class="svc reveal" open={i === 0}>
+            <summary>
+              <span class="num">{String(i + 1).padStart(3, "0")}</span>
+              <span class="svc-title faq-q">{f.q}</span>
+              <span class="plus" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-a"><p class="lead">{f.a}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+  })} />
 </Base>
 
 <style>
@@ -174,10 +194,21 @@ const featured = projects.slice(0, 6);
   .plus::before, .plus::after { content: ""; position: absolute; left: 50%; top: 50%; width: 26px; height: 2px; background: currentColor; transform: translate(-50%, -50%); transition: transform .25s; }
   .plus::after { transform: translate(-50%, -50%) rotate(90deg); }
   .svc[open] .plus::after { transform: translate(-50%, -50%) rotate(0deg); }
-  .svc-body { display: grid; grid-template-columns: 320px 1fr; gap: 32px; padding: 0 8px 36px 104px; }
-  .svc-body img { border-radius: 10px; aspect-ratio: 4/3; object-fit: cover; width: 100%; }
-  .svc-body ul { margin: 16px 0 24px; padding-left: 18px; color: var(--gainsboro); }
-  .svc-body li { margin-bottom: 6px; }
+  .faq-q { font-size: clamp(19px, 2.2vw, 26px); }
+  .faq-a { padding: 0 8px 32px 104px; max-width: 900px; }
+
+  .mosaic { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 230px; gap: 14px; }
+  .tile { position: relative; overflow: hidden; border-radius: 14px; background: var(--jungle); color: var(--soapstone); min-width: 0; }
+  .tile img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s ease; }
+  .tile:hover img { transform: scale(1.06); }
+  .tile::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(18,18,18,0) 40%, rgba(18,18,18,.92)); }
+  .cap { position: absolute; left: 18px; right: 18px; bottom: 16px; z-index: 1; display: flex; flex-direction: column; gap: 4px; }
+  .tnum { color: var(--gold); font-size: 13px; letter-spacing: .1em; font-variant-numeric: tabular-nums; }
+  .cap strong { font-size: clamp(17px, 1.7vw, 22px); letter-spacing: -.02em; line-height: 1.15; }
+  .more { font-size: 14px; color: var(--gainsboro); max-height: 0; opacity: 0; overflow: hidden; transition: max-height .4s, opacity .4s; }
+  .tile:hover .more, .tile:focus-visible .more { max-height: 60px; opacity: 1; }
+  .t1 { grid-column: span 2; grid-row: span 2; }
+  .t2, .t5, .t6 { grid-column: span 2; }
 
   .process { background: var(--jungle); }
   .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
@@ -197,7 +228,7 @@ const featured = projects.slice(0, 6);
 
   @media (max-width: 1023px) {
     .steps { grid-template-columns: 1fr 1fr; }
-    .svc-body { grid-template-columns: 1fr; padding-left: 8px; }
+    .faq-a { padding-left: 8px; }
   }
   @media (max-width: 809px) {
     .about-top, .about-media { grid-template-columns: 1fr; }
@@ -205,7 +236,11 @@ const featured = projects.slice(0, 6);
     .about-badge { left: 12px; bottom: 12px; }
     .about-img-side { display: none; }
     .stats { grid-template-columns: 1fr 1fr; }
-    .svc summary { grid-template-columns: 48px 1fr 30px; padding: 24px 4px; }
+    .svc summary { grid-template-columns: 40px 1fr 30px; padding: 22px 4px; }
+    .mosaic { grid-template-columns: 1fr 1fr; grid-auto-rows: 170px; gap: 10px; }
+    .t5, .t6 { grid-column: auto; }
+    .more { display: none; }
+    .cap { left: 12px; right: 12px; bottom: 12px; }
     .steps { grid-template-columns: 1fr; }
     .work-grid { grid-template-columns: 1fr 1fr; }
     .work-grid { gap: 12px; }

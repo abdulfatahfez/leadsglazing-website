@@ -1,0 +1,5 @@
+# Leads Glazing: everyone, including search engines and AI assistants, is welcome.
+User-agent: *
+Allow: /
+
+Sitemap: https://leadsglazing.com/sitemap.xml

@@ -15,6 +15,8 @@ export const company = {
     { city: "Abuja", address: "Uoo Complex, Jabi, Abuja" },
     { city: "Bida", address: "Opposite Fed Poly Big Gate, Bida, Niger State" },
   ],
+  // Search engine verification codes (Google Search Console, Bing Webmaster Tools).
+  verification: { google: "", bing: "" },
   experienceYears: 9, // owner, 18 Nov 2026: "9 years+ experience"
 };
 
@@ -110,6 +112,17 @@ export const projects = [
 export const team = [
   { name: "Elihu Abdulwahab", role: "Managing Director / CEO", image: "/images/team-elihu.jpg" },
   { name: "Arc. Ayomide Zainab Makinde", role: "Project Architect", image: "/images/team-ayomide.jpg", email: "ayomide@leadsglazing.com" },
+];
+
+// FAQ on the home page (also published as FAQPage structured data for Google and AI answers).
+// Only facts the owner has confirmed. Add timelines, materials and warranty once the owner answers.
+export const faqs = [
+  { q: "What does Leads Glazing do?", a: "We supply, fabricate and install glass and aluminium systems: aluminium windows and doors, curtain walls and facades, frameless glass and office partitions, shower cubicles, railings and balustrades, plasterboard partitions and POP ceilings, plus repairs and maintenance." },
+  { q: "Where are you located?", a: "We have two offices: Uoo Complex, Jabi, Abuja, and Opposite Fed Poly Big Gate, Bida, Niger State." },
+  { q: "Do you work outside Abuja and Niger State?", a: "Yes. Most of our work is in Abuja and the FCT, and we have also delivered projects further afield, such as curtain walls and windows at Obafemi Awolowo University (OAU), Ile-Ife." },
+  { q: "How do I get a quote?", a: "Call or WhatsApp 07031051140, email info@leadsglazing.com, or use the contact form on this site. We visit the site, take exact measurements and then send an itemised quote covering materials, labour, transport and timeline." },
+  { q: "Do you visit the site before quoting?", a: "Yes. Every quote starts with a site visit and measurement, so the price is based on your real openings, not estimates." },
+  { q: "How long has Leads Glazing been in business?", a: "We bring more than 9 years of hands-on glazing experience across homes, offices and institutions." },
 ];
 
 export const process = [
