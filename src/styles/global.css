@@ -72,7 +72,7 @@ h1, h2, h3, h4, p { margin: 0; }
 .btn-light { background: var(--soapstone); color: var(--onyx); }
 .btn-light:hover { background: var(--tequila); }
 .btn-dark { background: var(--onyx); color: var(--soapstone); }
-.btn-outline { border: 1px solid var(--thunder); color: var(--soapstone); }
+.btn-outline { border: 1px solid var(--grey); color: var(--soapstone); }
 .btn-outline:hover { border-color: var(--gold); }
 
 /* Light panel (the cream card on the template) */
