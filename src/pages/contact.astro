@@ -1,0 +1,90 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import { company, services } from "../data/site.js";
+---
+<Base title="Contact" description="Request a quote from Leads Glazing. Call, WhatsApp or email us, or visit our offices in Abuja and Bida.">
+  <PageHero eyebrow="Contact" before="Let’s start your" mark="project" sub="Tell us what you need and where. We will arrange a site visit and send you an itemised quote." />
+  <section class="section">
+    <div class="container contact">
+      <form id="quote" class="form reveal">
+        <div class="row">
+          <label>Your name<input name="name" required autocomplete="name" /></label>
+          <label>Phone number<input name="phone" type="tel" required autocomplete="tel" /></label>
+        </div>
+        <label>Service
+          <select name="service" id="service">
+            {services.map((s) => <option>{s.title}</option>)}
+            <option>Something else</option>
+          </select>
+        </label>
+        <label>Site location<input name="location" placeholder="e.g. Gwarinpa, Abuja" /></label>
+        <label>Project details<textarea name="details" rows="5" placeholder="Sizes, number of windows or panels, timeline..."></textarea></label>
+        <div class="actions">
+          <button type="submit" class="btn btn-light" data-via="wa">Send on WhatsApp</button>
+          <button type="submit" class="btn btn-outline" data-via="email">Send by email</button>
+        </div>
+        <p class="muted small">Your message opens in WhatsApp or your email app, ready to send.</p>
+      </form>
+
+      <aside class="info reveal">
+        <div class="info-block">
+          <h3>Call or WhatsApp</h3>
+          <a href={`tel:${company.phone}`}>{company.phone}</a>
+        </div>
+        <div class="info-block">
+          <h3>Email</h3>
+          <a href={`mailto:${company.email}`}>{company.email}</a>
+        </div>
+        <div class="info-block">
+          <h3>Instagram</h3>
+          <a href={company.instagram} target="_blank" rel="noopener">{company.instagramHandle}</a>
+        </div>
+        {company.offices.map((o) => (
+          <div class="info-block">
+            <h3>{o.city} office</h3>
+            <p>{o.address}</p>
+          </div>
+        ))}
+      </aside>
+    </div>
+  </section>
+  <script define:vars={{ phoneIntl: company.phoneIntl, email: company.email }}>
+    const form = document.getElementById("quote");
+    const params = new URLSearchParams(location.search);
+    const pre = params.get("service");
+    if (pre) { const sel = document.getElementById("service"); [...sel.options].forEach((o) => { if (o.text === pre) sel.value = pre; }); }
+    let via = "wa";
+    form.querySelectorAll("button[data-via]").forEach((b) => b.addEventListener("click", () => { via = b.dataset.via; }));
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const d = Object.fromEntries(new FormData(form));
+      const msg = `Hello Leads Glazing,\n\nName: ${d.name}\nPhone: ${d.phone}\nService: ${d.service}\nLocation: ${d.location || "-"}\n\n${d.details || ""}`;
+      if (via === "email") {
+        location.href = `mailto:${email}?subject=${encodeURIComponent("Quote request: " + d.service)}&body=${encodeURIComponent(msg)}`;
+      } else {
+        window.open(`https://wa.me/${phoneIntl}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
+      }
+    });
+  </script>
+</Base>
+<style>
+  .contact > * { min-width: 0; }
+  .contact { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: start; }
+  .form { display: flex; flex-direction: column; gap: 18px; background: var(--jungle); border: 1px solid var(--thunder); border-radius: 16px; padding: clamp(20px, 3vw, 36px); }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  label { display: flex; flex-direction: column; gap: 8px; font-size: 14px; color: var(--grey); }
+  input, select, textarea { width: 100%; min-width: 0; font: inherit; font-size: 16px; color: var(--soapstone); background: var(--onyx); border: 1px solid var(--thunder); border-radius: 10px; padding: 13px 14px; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--gold); }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 4px; }
+  .actions button { border: 0; cursor: pointer; font-family: inherit; }
+  .actions .btn-outline { border: 1px solid var(--thunder); background: none; }
+  .small { font-size: 13px; }
+  .info { display: flex; flex-direction: column; }
+  .info-block { padding: 20px 0; border-bottom: 1px solid var(--jungle); }
+  .info-block:first-child { padding-top: 0; }
+  .info-block h3 { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--grey); font-weight: 500; margin-bottom: 6px; }
+  .info-block a, .info-block p { font-size: 20px; letter-spacing: -0.02em; }
+  .info-block a:hover { color: var(--gold); }
+  @media (max-width: 809px) { .contact, .row { grid-template-columns: 1fr; } }
+</style>

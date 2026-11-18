@@ -1,0 +1,16 @@
+---
+const { eyebrow, before = "", mark, after = "", sub } = Astro.props;
+---
+<section class="page-hero">
+  <div class="container">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h1 class="h1 ph-title">{before}{before && " "}<span class="mark">{mark}</span>{after && " "}{after}</h1>
+    {sub && <p class="lead ph-sub">{sub}</p>}
+  </div>
+</section>
+<style>
+  .page-hero { padding: clamp(64px, 9vw, 120px) 0 clamp(40px, 5vw, 64px); border-bottom: 1px solid var(--jungle); }
+  .page-hero .container { display: flex; flex-direction: column; gap: 20px; }
+  .ph-title { font-size: clamp(40px, 7vw, 84px); }
+  .ph-sub { max-width: 620px; }
+</style>

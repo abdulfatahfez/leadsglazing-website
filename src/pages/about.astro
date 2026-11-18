@@ -1,0 +1,64 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import { company, values } from "../data/site.js";
+---
+<Base title="About" description="Leads Glazing is a glass and aluminium construction partner founded to elevate Nigerian architecture, with offices in Abuja and Bida.">
+  <PageHero eyebrow="About us" before="The new standard in" mark="glazing" sub="Leads Glazing was founded with a clear mission: to elevate Nigerian architecture with premium glass and aluminium, installed properly." />
+
+  <section class="section">
+    <div class="container story">
+      <img class="reveal" src="/images/facade-install.jpg" alt="Leads Glazing team installing a building facade" />
+      <div class="story-copy reveal">
+        <h2 class="h2">Built to be a <span class="mark">reliable</span> partner</h2>
+        <p class="lead">We are a modern construction partner specialising in the supply and expert installation of architectural glass and aluminium systems. We bring {company.experienceYears}+ years of professional, hands-on experience.</p>
+        <p class="lead">We combine a passion for craftsmanship with a commitment to doing things right, so every project meets a high standard of quality, performance and durability.</p>
+        <div class="ceo">
+          <strong>{company.ceo}</strong>
+          <span class="muted">{company.ceoTitle}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section values-sec">
+    <div class="panel-light light">
+      <div class="container values-wrap">
+        <h2 class="h2 reveal">Our values in <span class="mark">action</span></h2>
+        <div class="values">
+          {values.map((v, i) => (
+            <div class="value reveal">
+              <span class="vnum">{String(i + 1).padStart(2, "0")}</span>
+              <h3 class="h3">{v.title}</h3>
+              <p class="muted">{v.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container vision reveal">
+      <p class="eyebrow">Our vision</p>
+      <h2 class="h2">To shape the future of African skylines by setting a new standard for beautiful, functional and sustainable glazing.</h2>
+      <a class="btn btn-light" href="/contact">Partner with us</a>
+    </div>
+  </section>
+</Base>
+<style>
+  .story { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+  .story img { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 14px; }
+  .story-copy { display: flex; flex-direction: column; gap: 20px; }
+  .ceo { display: flex; flex-direction: column; gap: 2px; border-left: 2px solid var(--gold); padding-left: 16px; margin-top: 8px; }
+  .ceo strong { font-size: 20px; }
+  .values-wrap { padding-top: clamp(56px, 7vw, 88px); padding-bottom: clamp(56px, 7vw, 88px); }
+  .values { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; margin-top: 48px; }
+  .value { display: flex; flex-direction: column; gap: 10px; border-top: 1px solid var(--gainsboro); padding-top: 20px; }
+  .vnum { color: var(--gold); font-weight: 600; }
+  .value .h3 { font-size: 22px; }
+  .vision { display: flex; flex-direction: column; gap: 24px; align-items: flex-start; }
+  .vision .h2 { max-width: 900px; }
+  @media (max-width: 1023px) { .values { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 809px) { .story { grid-template-columns: 1fr; } .values { grid-template-columns: 1fr; } }
+</style>

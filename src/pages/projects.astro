@@ -1,0 +1,51 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import { projects } from "../data/site.js";
+const tags = ["All", ...new Set(projects.map((p) => p.tag))];
+---
+<Base title="Projects" description="Glass and aluminium projects by Leads Glazing: curtain walls, residences, office partitions and more across Abuja and beyond.">
+  <PageHero eyebrow="Our work" before="Featured" mark="projects" sub="A selection of facades, homes and interiors we have glazed. Photos are from our own sites." />
+  <section class="section">
+    <div class="container">
+      <div class="filters reveal" role="group" aria-label="Filter projects">
+        {tags.map((t, i) => <button class={`chip ${i === 0 ? "on" : ""}`} data-tag={t}>{t}</button>)}
+      </div>
+      <div class="grid">
+        {projects.map((p) => (
+          <figure class="card reveal" data-tag={p.tag}>
+            <img src={p.image} alt={`${p.title}, ${p.location}`} loading="lazy" />
+            <figcaption>
+              <span class="tag">{p.tag}</span>
+              <strong>{p.title}</strong>
+              <span class="muted">{p.location}{p.year && ` · ${p.year}`}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+  <script>
+    const chips = document.querySelectorAll(".chip");
+    const cards = document.querySelectorAll(".card");
+    chips.forEach((c) => c.addEventListener("click", () => {
+      chips.forEach((x) => x.classList.toggle("on", x === c));
+      const t = c.dataset.tag;
+      cards.forEach((card) => { card.style.display = t === "All" || card.dataset.tag === t ? "" : "none"; });
+    }));
+  </script>
+</Base>
+<style>
+  .filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 36px; }
+  .chip { background: none; border: 1px solid var(--thunder); color: var(--gainsboro); font: inherit; font-size: 14px; padding: 9px 18px; border-radius: 999px; cursor: pointer; }
+  .chip.on, .chip:hover { background: var(--soapstone); color: var(--onyx); border-color: var(--soapstone); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+  .card { margin: 0; background: var(--jungle); border-radius: 14px; overflow: hidden; }
+  .card img { width: 100%; aspect-ratio: 4/5; object-fit: cover; transition: transform .6s; }
+  .card:hover img { transform: scale(1.04); }
+  .card figcaption { padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 4px; position: relative; background: var(--jungle); }
+  .card strong { font-size: 18px; letter-spacing: -0.02em; }
+  .card .muted { font-size: 14px; }
+  .tag { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+  @media (max-width: 809px) { .grid { grid-template-columns: 1fr 1fr; gap: 12px; } .card strong { font-size: 15px; } .card figcaption { padding: 12px; } }
+</style>

@@ -1,0 +1,38 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import { services } from "../data/site.js";
+---
+<Base title="Services" description="Aluminium windows and doors, curtain walling, frameless glass partitions, shower cubicles, plasterboard partitions and POP ceilings in Abuja and Bida.">
+  <PageHero eyebrow="What we do" before="Our" mark="services" sub="Supply, fabrication and installation of glass and aluminium systems for homes, offices and institutions, from one team." />
+  <section class="section">
+    <div class="container svc-stack">
+      {services.map((s, i) => (
+        <article class={`svc-row reveal ${i % 2 ? "flip" : ""}`} id={s.slug}>
+          <img src={s.image} alt={s.title} loading={i < 2 ? "eager" : "lazy"} />
+          <div class="svc-copy">
+            <span class="num">{String(i + 1).padStart(3, "0")}</span>
+            <h2 class="h3">{s.title}</h2>
+            <p class="lead">{s.body}</p>
+            <ul>{s.points.map((p) => <li>{p}</li>)}</ul>
+            <a class="btn btn-light" href={`/contact?service=${encodeURIComponent(s.title)}`}>Get a quote</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</Base>
+<style>
+  .svc-stack { display: flex; flex-direction: column; gap: clamp(56px, 8vw, 96px); }
+  .svc-row { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: center; scroll-margin-top: 120px; }
+  .svc-row.flip img { order: 2; }
+  .svc-row img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 14px; }
+  .svc-copy { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+  .num { color: var(--gold); font-variant-numeric: tabular-nums; }
+  .svc-copy ul { margin: 0 0 8px; padding: 0; list-style: none; display: grid; gap: 10px; width: 100%; }
+  .svc-copy li { padding: 12px 0; border-bottom: 1px solid var(--jungle); color: var(--gainsboro); }
+  @media (max-width: 809px) {
+    .svc-row { grid-template-columns: 1fr; }
+    .svc-row.flip img { order: 0; }
+  }
+</style>
