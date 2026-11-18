@@ -208,9 +208,15 @@ const featured = projects.slice(0, 6);
     .svc summary { grid-template-columns: 48px 1fr 30px; padding: 24px 4px; }
     .steps { grid-template-columns: 1fr; }
     .work-grid { grid-template-columns: 1fr 1fr; }
-    .work-big { grid-column: span 2; grid-row: auto; aspect-ratio: 4/5; }
+    .work-grid { gap: 12px; }
+    .work { aspect-ratio: auto; display: flex; flex-direction: column; }
+    .work img { height: auto; aspect-ratio: 4/5; }
+    .work-big { grid-column: span 2; grid-row: auto; }
+    .work-big img { aspect-ratio: 4/3; }
     .work:nth-child(6) { display: none; }
-    .work-info { left: 8px; right: 8px; bottom: 8px; padding: 10px 12px; font-size: 12px; }
-    .work-info strong { font-size: 14px; }
+    .work-info { position: static; background: var(--jungle); color: var(--soapstone); border-radius: 0; padding: 12px; font-size: 12px; flex: 1; }
+    .work-info strong { font-size: 15px; }
+    .work-info span:last-child { color: var(--grey); }
+    .tag { font-size: 10px; letter-spacing: .1em; }
   }
 </style>
