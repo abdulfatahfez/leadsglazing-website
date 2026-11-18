@@ -108,7 +108,7 @@ export const projects = [
 
 // Team shown on the About page. Add a person here with a photo in public/images/ (4:5 portrait).
 export const team = [
-  { name: "Elihu Abdulwahab", role: "Managing Director / CEO", image: "/images/team-elihu.jpg", email: "ceo@leadsglazing.com" },
+  { name: "Elihu Abdulwahab", role: "Managing Director / CEO", image: "/images/team-elihu.jpg" },
   { name: "Arc. Ayomide Zainab Makinde", role: "Project Architect", image: "/images/team-ayomide.jpg", email: "ayomide@leadsglazing.com" },
 ];
 
