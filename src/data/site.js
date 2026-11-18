@@ -16,7 +16,7 @@ export const company = {
     { city: "Bida", address: "Opposite Fed Poly Big Gate, Bida, Niger State" },
   ],
   // Search engine verification codes (Google Search Console, Bing Webmaster Tools).
-  verification: { google: "", bing: "" },
+  verification: { google: "", bing: "398E9FEB70D9F4E9849478E171C328B4" },
   experienceYears: 9, // owner, 18 Nov 2026: "9 years+ experience"
 };
 
