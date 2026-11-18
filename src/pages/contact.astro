@@ -25,6 +25,15 @@ import { company, services } from "../data/site.js";
           <button type="submit" class="btn btn-outline" data-via="email">Send by email</button>
         </div>
         <p class="muted small">Your message opens in WhatsApp or your email app, ready to send.</p>
+        <div id="sent" class="sent" role="status" aria-live="polite" hidden>
+          <span class="sent-icon" aria-hidden="true">✓</span>
+          <div>
+            <strong id="sent-title">Your request is ready in WhatsApp</strong>
+            <p id="sent-text">Tap <b>Send</b> in WhatsApp to finish. We usually reply the same working day and will arrange a site visit.</p>
+            <p class="sent-help">Didn't open? Call or WhatsApp <a href="tel:07031051140">07031051140</a>, or email <a href="mailto:info@leadsglazing.com">info@leadsglazing.com</a>.</p>
+            <button type="button" id="sent-reset" class="sent-reset">Start a new request</button>
+          </div>
+        </div>
       </form>
 
       <aside class="info reveal">
@@ -60,11 +69,23 @@ import { company, services } from "../data/site.js";
       e.preventDefault();
       const d = Object.fromEntries(new FormData(form));
       const msg = `Hello Leads Glazing,\n\nName: ${d.name}\nPhone: ${d.phone}\nService: ${d.service}\nLocation: ${d.location || "-"}\n\n${d.details || ""}`;
+      const sent = document.getElementById("sent");
       if (via === "email") {
+        document.getElementById("sent-title").textContent = "Your request is ready in your email app";
+        document.getElementById("sent-text").innerHTML = "Press <b>Send</b> in your email app to finish. We usually reply the same working day and will arrange a site visit.";
         location.href = `mailto:${email}?subject=${encodeURIComponent("Quote request: " + d.service)}&body=${encodeURIComponent(msg)}`;
       } else {
+        document.getElementById("sent-title").textContent = "Your request is ready in WhatsApp";
+        document.getElementById("sent-text").innerHTML = "Tap <b>Send</b> in WhatsApp to finish. We usually reply the same working day and will arrange a site visit.";
         window.open(`https://wa.me/${phoneIntl}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
       }
+      sent.hidden = false;
+      sent.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+    document.getElementById("sent-reset").addEventListener("click", () => {
+      form.reset();
+      document.getElementById("sent").hidden = true;
+      form.querySelector("input").focus();
     });
   </script>
 </Base>
@@ -80,6 +101,14 @@ import { company, services } from "../data/site.js";
   .actions button { border: 0; cursor: pointer; font-family: inherit; }
   .actions .btn-outline { border: 1px solid var(--thunder); background: none; }
   .small { font-size: 13px; }
+  .sent { display: flex; gap: 14px; align-items: flex-start; border: 1px solid var(--gold); background: var(--onyx); border-radius: 12px; padding: 18px; }
+  .sent[hidden] { display: none; }
+  .sent-icon { flex: none; width: 32px; height: 32px; border-radius: 50%; background: var(--gold); color: var(--onyx); display: grid; place-items: center; font-weight: 700; }
+  .sent strong { font-size: 17px; display: block; margin-bottom: 4px; }
+  .sent p { color: var(--gainsboro); font-size: 15px; line-height: 1.5; }
+  .sent .sent-help { color: var(--grey); font-size: 13px; margin-top: 8px; }
+  .sent a { color: var(--gold); }
+  .sent-reset { margin-top: 12px; background: none; border: 0; padding: 0; color: var(--gold); font: inherit; font-size: 14px; text-decoration: underline; cursor: pointer; }
   .info { display: flex; flex-direction: column; }
   .info-block { padding: 20px 0; border-bottom: 1px solid var(--jungle); }
   .info-block:first-child { padding-top: 0; }
