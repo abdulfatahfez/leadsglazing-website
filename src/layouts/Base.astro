@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 import { company, nav, services } from "../data/site.js";
-const { title, description = "Leads Glazing supplies and installs aluminium windows and doors, curtain walls, frameless glass partitions and shower glass in Abuja, Bida and across Nigeria. 9+ years' experience.", image = "/images/curtain-wall-abuja.jpg" } = Astro.props;
+const { title, description = "Leads Glazing supplies and installs aluminium windows and doors, curtain walls, frameless glass partitions and shower glass in Abuja, Bida and across Nigeria. 9+ years' experience.", image = "/og-image.jpg" } = Astro.props;
 const fullTitle = title ? `${title} | Leads Glazing` : "Leads Glazing | Aluminium Windows, Curtain Walls & Glass in Abuja";
 const site = "https://leadsglazing.com";
 const canonical = new URL(Astro.url.pathname, site).href;
@@ -47,6 +47,13 @@ const wa = `https://wa.me/${company.phoneIntl}?text=${encodeURIComponent("Hello 
   <meta property="og:title" content={fullTitle} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={ogImage} />
+  <meta property="og:image:secure_url" content={ogImage} />
+  {image === "/og-image.jpg" && <>
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+  </>}
+  <meta property="og:image:alt" content="Leads Glazing logo beside a glazed office building in Abuja" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={fullTitle} />
   <meta name="twitter:description" content={description} />
