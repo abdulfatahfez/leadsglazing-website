@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import Img from "../components/Img.astro";
 import PageHero from "../components/PageHero.astro";
 import { company, values, team } from "../data/site.js";
 ---
@@ -8,7 +9,7 @@ import { company, values, team } from "../data/site.js";
 
   <section class="section">
     <div class="container story">
-      <img class="reveal" src="/images/facade-install.jpg" alt="Leads Glazing team installing a building facade" />
+      <Img class="reveal" src="/images/facade-install.jpg" alt="Leads Glazing team installing a building facade" sizes="(max-width: 900px) 100vw, 45vw" />
       <div class="story-copy reveal">
         <h2 class="h2">Built to be a <span class="mark">reliable</span> partner</h2>
         <p class="lead">We are a modern construction partner specialising in the supply and expert installation of architectural glass and aluminium systems. We bring {company.experienceYears}+ years of professional, hands-on experience.</p>
@@ -28,8 +29,8 @@ import { company, values, team } from "../data/site.js";
         {team.map((t) => (
           <div class="member reveal">
             {t.image
-              ? <img src={t.image} alt={t.name} loading="lazy" />
-              : <div class="member-mark"><img src="/images/logo-gold.png" alt="" /></div>}
+              ? <Img class="member-photo" src={t.image} alt={t.name} sizes="(max-width: 560px) 50vw, 25vw" />
+              : <div class="member-mark"><Img src="/images/logo-gold.png" alt="" sizes="200px" /></div>}
             <strong>{t.name}</strong>
             <span class="muted">{t.role}</span>
             {t.email && <a class="member-mail" href={`mailto:${t.email}`}>{t.email}</a>}
@@ -60,7 +61,7 @@ import { company, values, team } from "../data/site.js";
     <div class="container vision reveal">
       <p class="eyebrow">Our vision</p>
       <h2 class="h2">To shape the future of African skylines by setting a new standard for beautiful, functional and sustainable glazing.</h2>
-      <a class="btn btn-light" href="/contact">Partner with us</a>
+      <a class="btn btn-light" href="/contact/">Partner with us</a>
     </div>
   </section>
 </Base>
@@ -72,7 +73,7 @@ import { company, values, team } from "../data/site.js";
   .ceo strong { font-size: 20px; }
   .team { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 300px)); gap: 28px; margin-top: 40px; }
   .member { display: flex; flex-direction: column; gap: 4px; }
-  .member > img, .member-mark { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 12px; margin-bottom: 12px; }
+  .member-photo, .member-mark { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 12px; margin-bottom: 12px; }
   .member-mark { background: var(--jungle); display: grid; place-items: center; border: 1px solid var(--thunder); }
   .member-mark img { width: 55%; }
   .member strong { font-size: 19px; letter-spacing: -0.02em; }

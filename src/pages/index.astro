@@ -1,20 +1,20 @@
 ---
 import Base from "../layouts/Base.astro";
+import Img from "../components/Img.astro";
 import { company, services, projects, process, faqs } from "../data/site.js";
 const featured = projects.slice(0, 6);
 ---
 <Base>
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-bg" style="background-image:url('/images/curtain-wall-abuja.jpg')"></div>
+    <div class="hero-bg"><Img src="/images/curtain-wall-abuja.jpg" alt="" sizes="100vw" loading="eager" fetchpriority="high" /></div>
     <div class="hero-shade"></div>
     <div class="container hero-content">
-      <p class="eyebrow">Glass & aluminium specialists · Abuja & Bida</p>
-      <h1 class="h1">Premium<br /><span class="mark">Aluminium</span> Solutions</h1>
+      <h1 class="h1"><span class="eyebrow hero-eyebrow">Leads Glazing · Glass & aluminium specialists · Abuja & Bida</span>Premium<br /><span class="mark">Aluminium</span> Solutions</h1>
       <p class="hero-sub">We supply and expertly install premium glass and aluminium systems, so every project meets a high standard of quality, performance and finish.</p>
       <div class="hero-actions">
-        <a class="btn btn-light" href="/contact">Start a project</a>
-        <a class="btn btn-outline" href="/projects">See our work</a>
+        <a class="btn btn-light" href="/contact/">Start a project</a>
+        <a class="btn btn-outline" href="/projects/">See our work</a>
       </div>
     </div>
   </section>
@@ -36,14 +36,14 @@ const featured = projects.slice(0, 6);
         </div>
         <div class="about-media reveal">
           <div class="about-img-main">
-            <img src="/images/katampe-residence.jpg" alt="Residence in Katampe Extension, Abuja, glazed by Leads Glazing" loading="lazy" />
+            <Img src="/images/katampe-residence.jpg" alt="Residence in Katampe Extension, Abuja, glazed by Leads Glazing" sizes="(max-width: 900px) 100vw, 55vw" />
             <div class="about-badge">
               <strong>Supply · Fabricate · Install</strong>
               <span>One team from measurement to handover</span>
             </div>
           </div>
           <div class="about-img-side">
-            <img src="/images/katampe-balconies.jpg" alt="Glass balconies and decorative screens, Katampe Extension" loading="lazy" />
+            <Img src="/images/katampe-balconies.jpg" alt="Glass balconies and decorative screens, Katampe Extension" sizes="(max-width: 900px) 100vw, 40vw" />
           </div>
         </div>
         <p class="about-caption muted reveal">Katampe Extension, Abuja. Glass balconies, windows and decorative screens.</p>
@@ -62,12 +62,12 @@ const featured = projects.slice(0, 6);
     <div class="container">
       <div class="sec-head reveal">
         <h2 class="h2">Smart solutions<br />for every <span class="mark">project</span></h2>
-        <a class="view-all" href="/services">View all services ↗</a>
+        <a class="view-all" href="/services/">View all services ↗</a>
       </div>
       <div class="mosaic">
         {services.map((s, i) => (
-          <a href={`/services#${s.slug}`} class={`tile t${i + 1} reveal`}>
-            <img src={s.image} alt={`${s.title} by Leads Glazing`} loading="lazy" />
+          <a href={`/services/#${s.slug}`} class={`tile t${i + 1} reveal`}>
+            <Img src={s.image} alt={`${s.title} by Leads Glazing`} sizes={i === 0 ? "(max-width: 700px) 100vw, 50vw" : "(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 25vw"} />
             <div class="cap">
               <span class="tnum">{String(i + 1).padStart(2, "0")}</span>
               <strong>{s.title}</strong>
@@ -102,12 +102,12 @@ const featured = projects.slice(0, 6);
     <div class="container">
       <div class="sec-head reveal">
         <h2 class="h2">Featured <span class="mark">works</span></h2>
-        <a class="view-all" href="/projects">All projects ↗</a>
+        <a class="view-all" href="/projects/">All projects ↗</a>
       </div>
       <div class="work-grid">
         {featured.map((p, i) => (
-          <a href="/projects" class={`work reveal ${i === 0 ? "work-big" : ""}`}>
-            <img src={p.image} alt={`${p.title}, ${p.location}`} loading="lazy" />
+          <a href="/projects/" class={`work reveal ${i === 0 ? "work-big" : ""}`}>
+            <Img src={p.image} alt={`${p.title}, ${p.location}`} sizes={i === 0 ? "(max-width: 700px) 100vw, 66vw" : "(max-width: 700px) 50vw, 33vw"} />
             <div class="work-info">
               <span class="tag">{p.tag}</span>
               <strong>{p.title}</strong>
@@ -124,7 +124,7 @@ const featured = projects.slice(0, 6);
     <div class="container">
       <div class="sec-head reveal">
         <h2 class="h2">Questions,<br /><span class="mark">answered</span></h2>
-        <a class="view-all" href="/contact">Ask us something else ↗</a>
+        <a class="view-all" href="/contact/">Ask us something else ↗</a>
       </div>
       <div class="svc-list">
         {faqs.map((f, i) => (
@@ -149,8 +149,10 @@ const featured = projects.slice(0, 6);
 
 <style>
   .hero { position: relative; min-height: min(88vh, 820px); display: grid; place-items: center; overflow: hidden; }
-  .hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center 30%; transform: scale(1.05); }
+  .hero-bg { position: absolute; inset: 0; transform: scale(1.05); }
+  .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
   .hero-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(18,18,18,.55) 0%, rgba(18,18,18,.35) 40%, rgba(18,18,18,.95) 100%); }
+  .hero-eyebrow { display: block; margin-bottom: 22px; font-weight: 400; line-height: 1.4; }
   .hero-content { position: relative; text-align: center; padding-top: 80px; padding-bottom: 80px; display: flex; flex-direction: column; align-items: center; gap: 22px; }
   .hero-sub { max-width: 600px; font-size: clamp(16px, 1.5vw, 19px); line-height: 1.6; color: var(--gainsboro); text-wrap: balance; }
   .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }

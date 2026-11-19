@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import Img from "../components/Img.astro";
 import { company, nav, services } from "../data/site.js";
 const { title, description = "Leads Glazing supplies and installs aluminium windows and doors, curtain walls, frameless glass partitions and shower glass in Abuja, Bida and across Nigeria. 9+ years' experience.", image = "/og-image.jpg" } = Astro.props;
 const fullTitle = title ? `${title} | Leads Glazing` : "Leads Glazing | Aluminium Windows, Curtain Walls & Glass in Abuja";
@@ -13,6 +14,8 @@ const ld = {
       "@type": "HomeAndConstructionBusiness",
       "@id": `${site}/#business`,
       name: company.name,
+      alternateName: ["Leads Glazing Nigeria", "LeadsGlazing", "Leads Glazing Abuja"],
+      slogan: "Architectural Glass & Aluminium Solutions",
       url: site,
       logo: `${site}/icon-512.png`,
       image: `${site}/images/curtain-wall-abuja.jpg`,
@@ -24,9 +27,9 @@ const ld = {
       areaServed: ["Abuja", "Federal Capital Territory", "Niger State", "Nigeria"],
       address: { "@type": "PostalAddress", streetAddress: "Uoo Complex, Jabi", addressLocality: "Abuja", addressRegion: "FCT", addressCountry: "NG" },
       location: company.offices.map((o) => ({ "@type": "Place", name: `Leads Glazing ${o.city} office`, address: { "@type": "PostalAddress", streetAddress: o.address, addressLocality: o.city, addressCountry: "NG" } })),
-      hasOfferCatalog: { "@type": "OfferCatalog", name: "Glazing services", itemListElement: services.map((s) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: s.title, description: s.short, url: `${site}/services#${s.slug}` } })) },
+      hasOfferCatalog: { "@type": "OfferCatalog", name: "Glazing services", itemListElement: services.map((s) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: s.title, description: s.short, url: `${site}/services/#${s.slug}` } })) },
     },
-    { "@type": "WebSite", "@id": `${site}/#website`, url: site, name: company.name, publisher: { "@id": `${site}/#business` } },
+    { "@type": "WebSite", "@id": `${site}/#website`, url: site, name: company.name, alternateName: ["LeadsGlazing", "leadsglazing.com"], publisher: { "@id": `${site}/#business` } },
   ],
 };
 const wa = `https://wa.me/${company.phoneIntl}?text=${encodeURIComponent("Hello Leads Glazing, I'd like a quote for")}`;
@@ -76,7 +79,7 @@ const wa = `https://wa.me/${company.phoneIntl}?text=${encodeURIComponent("Hello 
         <span class="ring"><span></span></span>
         <span class="label">Menu</span>
       </button>
-      <a class="logo" href="/" aria-label="Leads Glazing home"><img src="/images/logo-gold.png" alt="Leads Glazing" width="420" height="245" /></a>
+      <a class="logo" href="/" aria-label="Leads Glazing home"><Img src="/images/logo-gold.png" alt="Leads Glazing" sizes="160px" loading="eager" /></a>
       <div class="header-right">
         <a class="email" href={`mailto:${company.email}`}>{company.email}</a>
       </div>
@@ -85,7 +88,7 @@ const wa = `https://wa.me/${company.phoneIntl}?text=${encodeURIComponent("Hello 
 
   <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Menu">
     <div class="drawer-top">
-      <a href="/"><img src="/images/logo-gold.png" alt="Leads Glazing" style="height:52px;width:auto" /></a>
+      <a href="/"><Img src="/images/logo-gold.png" alt="Leads Glazing" sizes="120px" style="height:52px;width:auto" /></a>
       <button class="drawer-close" id="menuClose" aria-label="Close menu">&times;</button>
     </div>
     <nav>
@@ -106,7 +109,7 @@ const wa = `https://wa.me/${company.phoneIntl}?text=${encodeURIComponent("Hello 
     <div class="container">
       <div class="footer-cta">
         <h2 class="h2">Let’s build <span class="mark">together</span></h2>
-        <a class="btn btn-light" href="/contact">Request a quote</a>
+        <a class="btn btn-light" href="/contact/">Request a quote</a>
       </div>
       <div class="footer-grid">
         <div>
@@ -115,7 +118,7 @@ const wa = `https://wa.me/${company.phoneIntl}?text=${encodeURIComponent("Hello 
         </div>
         <div>
           <h4>Services</h4>
-          <ul>{services.slice(0, 5).map((s) => <li><a href={`/services#${s.slug}`}>{s.title}</a></li>)}</ul>
+          <ul>{services.slice(0, 5).map((s) => <li><a href={`/services/#${s.slug}`}>{s.title}</a></li>)}</ul>
         </div>
         <div>
           <h4>Offices</h4>

@@ -1,0 +1,16 @@
+---
+// Responsive photo: serves WebP at the right width for the screen, with a compressed JPG/PNG fallback.
+// Use like <img>: <Img src="/images/oau-curtain-wall.jpg" alt="..." sizes="(max-width: 700px) 100vw, 33vw" />
+import images from "../data/images.json";
+const { src, alt = "", sizes = "(max-width: 700px) 100vw, 50vw", loading = "lazy", fetchpriority, class: cls, style, ...rest } = Astro.props;
+const m = images[src];
+const srcset = m && m.widths.map((w) => `${m.webp}-${w}.webp ${w}w`).join(", ");
+---
+{m ? (
+  <picture>
+    <source type="image/webp" srcset={srcset} sizes={sizes} />
+    <img src={m.fallback} width={m.width} height={m.height} alt={alt} loading={loading} decoding="async" fetchpriority={fetchpriority} class={cls} style={style} {...rest} />
+  </picture>
+) : (
+  <img src={src} alt={alt} loading={loading} decoding="async" class={cls} style={style} {...rest} />
+)}

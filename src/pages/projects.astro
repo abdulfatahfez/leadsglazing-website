@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import Img from "../components/Img.astro";
 import PageHero from "../components/PageHero.astro";
 import { projects } from "../data/site.js";
 const tags = ["All", ...new Set(projects.map((p) => p.tag))];
@@ -14,7 +15,7 @@ const tags = ["All", ...new Set(projects.map((p) => p.tag))];
       <div class="grid">
         {projects.map((p) => (
           <figure class="card reveal" data-tag={p.tag}>
-            <img src={p.image} alt={`${p.title}, ${p.location}`} loading="lazy" />
+            <Img src={p.image} alt={`${p.title}, ${p.location}`} sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw" />
             <figcaption>
               <span class="tag">{p.tag}</span>
               <strong>{p.title}</strong>
